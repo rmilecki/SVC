@@ -885,7 +885,13 @@ function Pie() {
 		}
 
 		if ((OPTIONS & OPT_ANIM) > 0) {
-			document.getElementById("columns").setAttribute("transform", "translate(0,0)"); //FIXME: use "set"
+			var anim = document.createElementNS("http://www.w3.org/2000/svg", "set");
+			anim.setAttribute("attributeType", "XML");
+			anim.setAttribute("attributeName", "transform");
+			anim.setAttribute("begin", "0s");
+			anim.setAttribute("to", "translate(0,0)");
+			//anim.setAttribute("fill", "freeze"); FIXME: ???
+			document.getElementById("columns").appendChild(anim);
 
 			var anim = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
 			anim.setAttribute("attributeType", "XML");
