@@ -27,48 +27,36 @@ function parseParams() {
 			if (param[1] == 'bhs') {
 				TYPE = 'BarsH';
 				COL_OVERLAY = 60;
-			}
-			else if (param[1] == 'bhg') {
+			} else if (param[1] == 'bhg') {
 				TYPE = 'BarsH';
 				COL_OVERLAY = 0;
-			}
-			else if (param[1] == 'bvs') {
+			} else if (param[1] == 'bvs') {
 				TYPE = 'BarsV';
 				COL_OVERLAY = 60;
-			}
-			else if (param[1] == 'bvg') {
+			} else if (param[1] == 'bvg') {
 				TYPE = 'BarsV';
 				COL_OVERLAY = 0;
-			}
-			else if (param[1] == 'p') {
+			} else if (param[1] == 'p') {
 				TYPE = 'Pie';
-			}
-			else if (param[1] == 'lc') {
+			} else if (param[1] == 'lc') {
 				TYPE = 'Points';
-			}
-			else if (param[1] == 'ls') {
+			} else if (param[1] == 'ls') {
 				TYPE = 'Points';
-			}
-			else if (param[1] == 'lxy') {
+			} else if (param[1] == 'lxy') {
 				TYPE = 'Points';
-			}
-			else if (param[1] == 's') {
+			} else if (param[1] == 's') {
 				TYPE = 'Points';
 				OPTIONS = OPTIONS & (~OPT_LINE);
 			}
-		}
-		else if (param[0] == 'chtt') {
+		} else if (param[0] == 'chtt') {
 			if (param[1].length == 0) TITLE = undefined;
 			else TITLE = decodeURI(param[1]).replace('+', ' ');
-		}
-		else if (param[0] == 'chp') {
+		} else if (param[0] == 'chp') {
 			START_ANGLE = getDegrees(decodeURI(param[1]));
-		}
-		else if (param[0] == 'anim') {
+		} else if (param[0] == 'anim') {
 			if (param[1] == 1) OPTIONS |= OPT_ANIM;
 			else OPTIONS = OPTIONS & (~OPT_ANIM);
-		}
-		else if (param[0] == 'hackit') {
+		} else if (param[0] == 'hackit') {
 			EXPERIMENTAL = true;
 		}
 	}
@@ -173,9 +161,8 @@ function SVC() {
 	this.addTitle = function() {
 		var tmp = document.getElementById('title');
 		tmp.textContent = TITLE;
-		if ((OPTIONS & OPT_ANIM) > 0) {
+		if ((OPTIONS & OPT_ANIM) > 0)
 			tmp.appendChild(this.createAnimate('y', -5, 26));
-		}
 	}
 
 	/* Validates given DATA and options */
@@ -190,17 +177,15 @@ function SVC() {
 			if (typeof DATA[i][posInDATA] !== 'undefined' && DATA[i][posInDATA] != '') {
 				document.getElementById("labels").appendChild(this.createText(DATA[i][posInDATA]));
 				this.hasAnyLabel = 1;
-			}
-			else {
+			} else {
 				document.getElementById("labels").appendChild(this.createText(''));
 			}
 		}
 
 		/* Space for labels */
 		var tmp = document.getElementById("labels").getElementsByTagName('text');
-		for (var i = 0; i < tmp.length; ++i) {
+		for (var i = 0; i < tmp.length; ++i)
 			this.maxLabelTextLength = Math.max(this.maxLabelTextLength, tmp[i].getComputedTextLength());
-		}
 	}
 
 	this.addPrivateElements = function() {
@@ -240,10 +225,13 @@ function SVC() {
 	this.generate = function() {
 		this.firstCalculations();
 
-		if (!this.validate()) return;
+		if (!this.validate())
+			return;
 
-		if (typeof TITLE !== "undefined") this.addTitle();
-		if (this.labelsPosition >= 0) this.addLabels(this.labelsPosition);
+		if (typeof TITLE !== "undefined")
+			this.addTitle();
+		if (this.labelsPosition >= 0)
+			this.addLabels(this.labelsPosition);
 		this.addPrivateElements();
 
 		this.calculateMargins();
@@ -257,7 +245,8 @@ function SVC() {
 		this.finalGraphWidth = this.width - this.marginLeft - this.marginRight;
 		this.finalGraphHeight = HEIGHT - this.marginTop - this.marginBottom;
 
-		if (this.hasAnyLabel) this.placeLabels();
+		if (this.hasAnyLabel)
+			this.placeLabels();
 		this.placePrivateElements();
 		this.placeGraph();
 
@@ -282,18 +271,20 @@ function Grid() {
 	this.addPrivateElements = function() {
 		var values = document.getElementById("values").getElementsByTagName('g');
 
-		if (this.hasAxisX)
-		for (var i = 0; i < this.linesV + 1; ++i) {
-			var tmp = this.createText(i * GRID_STEP);
-			values[0].appendChild(tmp);
-			this.maxValueTextLength = Math.max(this.maxValueTextLength, tmp.getComputedTextLength());
+		if (this.hasAxisX) {
+			for (var i = 0; i < this.linesV + 1; ++i) {
+				var tmp = this.createText(i * GRID_STEP);
+				values[0].appendChild(tmp);
+				this.maxValueTextLength = Math.max(this.maxValueTextLength, tmp.getComputedTextLength());
+			}
 		}
 
-		if (this.hasAxisY)
-		for (var i = 0; i < this.linesH + 1; ++i) {
-			var tmp = this.createText(i * GRID_STEP);
-			values[1].appendChild(tmp);
-			this.maxValueTextLength = Math.max(this.maxValueTextLength, tmp.getComputedTextLength());
+		if (this.hasAxisY) {
+			for (var i = 0; i < this.linesH + 1; ++i) {
+				var tmp = this.createText(i * GRID_STEP);
+				values[1].appendChild(tmp);
+				this.maxValueTextLength = Math.max(this.maxValueTextLength, tmp.getComputedTextLength());
+			}
 		}
 	}
 
@@ -340,31 +331,26 @@ function Points() {
 	this.firstCalculations = function() {
 		/* Find max value and calculate amount of horizontal lines*/
 		var maxValX = -1;
-		for (var i = 0; i < DATA.length; ++i) {
+		for (var i = 0; i < DATA.length; ++i)
 			maxValX = Math.max(maxValX, DATA[i][0]);
-		}
 		this.linesV = Math.ceil(maxValX / GRID_STEP) + 1;
 
 		/* Find max value and calculate amount of horizontal lines*/
 		var maxValY = -1;
-		for (var i = 0; i < DATA.length; ++i) {
+		for (var i = 0; i < DATA.length; ++i)
 			maxValY = Math.max(maxValY, DATA[i][1]);
-		}
 		this.linesH = Math.ceil(maxValY / GRID_STEP) + 1;
 
 		/* Axises decisions */
-		if ((OPTIONS & OPT_AXIS_X) > 0) {
+		if ((OPTIONS & OPT_AXIS_X) > 0)
 			this.hasAxisX = 1;
-		}
-		if ((OPTIONS & OPT_AXIS_Y) > 0) {
+		if ((OPTIONS & OPT_AXIS_Y) > 0)
 			this.hasAxisY = 1;
-		}
 	}
 
 	/* Validates given DATA and options */
 	this.validate = function() {
-		if (typeof WIDTH === "undefined" ||
-			typeof HEIGHT === "undefined") {
+		if (typeof WIDTH === "undefined" || typeof HEIGHT === "undefined") {
 			alert('Brak podanych rozmiarów. Wymagane: WIDTH i HEIGHT');
 			return false;
 		}
@@ -378,9 +364,12 @@ function Points() {
 	}
 
 	this.calculateMargins = function() {
-		if (typeof TITLE !== "undefined") this.marginTop += 10 + 16; //16px is font-size
-		if (this.hasAxisX) this.marginBottom += 25;
-		if (this.hasAxisY) this.marginLeft += 10 + this.maxValueTextLength;
+		if (typeof TITLE !== "undefined")
+			this.marginTop += 10 + 16; //16px is font-size
+		if (this.hasAxisX)
+			this.marginBottom += 25;
+		if (this.hasAxisY)
+			this.marginLeft += 10 + this.maxValueTextLength;
 	}
 
 	this.calculateSize = function() {
@@ -410,8 +399,10 @@ function Points() {
 	};
 
 	this.addGrid = function() {
-		if ((OPTIONS & OPT_GRID_V) > 0) this.addGridV();
-		if ((OPTIONS & OPT_GRID_H) > 0) this.addGridH();
+		if ((OPTIONS & OPT_GRID_V) > 0)
+			this.addGridV();
+		if ((OPTIONS & OPT_GRID_H) > 0)
+			this.addGridH();
 	}
 
 	this.addColumns = function() {
@@ -499,16 +490,14 @@ function Bars() {
 
 	this.firstCalculations = function() {
 		/* Find max cols together */
-		for (var i = 0; i < DATA.length; ++i) {
+		for (var i = 0; i < DATA.length; ++i)
 			this.maxColsTogether = Math.max(this.maxColsTogether, DATA[i].length - 1);
-		}
 
 		/* Find max value */
 		var maxVal = -1;
 		for (var i = 0; i < DATA.length; ++i) {
-			for (var j = 1; j < DATA[i].length; ++j) {
+			for (var j = 1; j < DATA[i].length; ++j)
 				maxVal = Math.max(maxVal, DATA[i][j]);
-			}
 		}
 
 		/* Calculate both, only one will be used */
@@ -518,9 +507,8 @@ function Bars() {
 		/* BarsV and BarsH have some different calculations */
 		this.privateCalculations();
 
-		if (typeof COL_OVERLAY === 'undefined') {
+		if (typeof COL_OVERLAY === 'undefined')
 			COL_OVERLAY = 0;
-		}
 	}
 
 	this.addFinalElements = function() {
@@ -538,9 +526,8 @@ function BarsV() {
 	this.privateCalculations = function() {
 		this.linesV = -1;
 
-		if ((OPTIONS & OPT_AXIS_Y) > 0) {
+		if ((OPTIONS & OPT_AXIS_Y) > 0)
 			this.hasAxisY = 1;
-		}
 	}
 
 	/* Validates given DATA and options */
@@ -561,9 +548,12 @@ function BarsV() {
 	}
 
 	this.calculateMargins = function() {
-		if (typeof TITLE !== "undefined") this.marginTop += 10 + 16; //16px is font-size
-		if (this.hasAnyLabel) this.marginBottom += this.maxLabelTextLength; //FIXME: division by sqrt(2)?
-		if ((OPTIONS & OPT_AXIS_Y) > 0) this.marginLeft += 10 + this.maxValueTextLength;
+		if (typeof TITLE !== "undefined")
+			this.marginTop += 10 + 16; //16px is font-size
+		if (this.hasAnyLabel)
+			this.marginBottom += this.maxLabelTextLength; //FIXME: division by sqrt(2)?
+		if ((OPTIONS & OPT_AXIS_Y) > 0)
+			this.marginLeft += 10 + this.maxValueTextLength;
 	}
 
 	this.calculateSize = function() {
@@ -572,8 +562,7 @@ function BarsV() {
 			this.width = WIDTH;
 			this.my_COL_WIDTH = this.width - this.marginLeft - this.marginRight - 20; /* 20 is 2 * 10px margin from border of graphBg */
 			this.my_COL_WIDTH /= (this.maxColsTogether * ((100 - COL_OVERLAY) / 100) * DATA.length) + ((COL_OVERLAY / 100) * DATA.length) + (0.5 * (DATA.length)) - 0.5;
-		}
-		else { /* Calculate WIDTH using my_COL_WIDTH */
+		} else { /* Calculate WIDTH using my_COL_WIDTH */
 			this.my_COL_WIDTH = COL_WIDTH;
 			this.width = this.marginLeft + this.marginRight + 20;
 			this.width += DATA.length * (this.my_COL_WIDTH * this.maxColsTogether * ((100 - COL_OVERLAY) / 100) + (this.my_COL_WIDTH * COL_OVERLAY/100) + 0.5 * this.my_COL_WIDTH ) - (0.5 * this.my_COL_WIDTH);
@@ -596,7 +585,8 @@ function BarsV() {
 	};
 
 	this.placePrivateElements = function() {
-		if ((OPTIONS & OPT_AXIS_Y) == 0) return;
+		if ((OPTIONS & OPT_AXIS_Y) == 0)
+			return;
 
 		var tmp = document.getElementById("values").getElementsByTagName('text');
 		var tmpx = this.finalGraphHeight / this.linesH;
@@ -608,7 +598,8 @@ function BarsV() {
 	};
 
 	this.addGrid = function() {
-		if ((OPTIONS & OPT_GRID_H) > 0) this.addGridH();
+		if ((OPTIONS & OPT_GRID_H) > 0)
+			this.addGridH();
 	}
 
 	this.addColumns = function() {
@@ -634,9 +625,8 @@ function BarsV() {
 				x += (100 - COL_OVERLAY) / 100 * this.my_COL_WIDTH;
 			}
 			document.getElementById('columns').appendChild(gr);
-			for (; j <= this.maxColsTogether; ++j) {
+			for (; j <= this.maxColsTogether; ++j)
 				x += (100 - COL_OVERLAY) / 100 * this.my_COL_WIDTH;
-			}
 			x += COL_OVERLAY / 100 * this.my_COL_WIDTH;
 			x += this.my_COL_WIDTH / 2;
 		}
@@ -654,9 +644,8 @@ function BarsH() {
 	this.privateCalculations = function() {
 		this.linesH = -1;
 
-		if ((OPTIONS & OPT_AXIS_X) > 0) {
+		if ((OPTIONS & OPT_AXIS_X) > 0)
 			this.hasAxisX = 1;
-		}
 	}
 
 	/* Validates given DATA and options */
@@ -677,9 +666,12 @@ function BarsH() {
 	}
 
 	this.calculateMargins = function() {
-		if (typeof TITLE !== "undefined") this.marginTop += 10 + 16; //16px is font-size
-		if (this.hasAnyLabel) this.marginLeft += this.maxLabelTextLength;
-		if ((OPTIONS & OPT_AXIS_X) > 0) this.marginBottom += 10 + 16;
+		if (typeof TITLE !== "undefined")
+			this.marginTop += 10 + 16; //16px is font-size
+		if (this.hasAnyLabel)
+			this.marginLeft += this.maxLabelTextLength;
+		if ((OPTIONS & OPT_AXIS_X) > 0)
+			this.marginBottom += 10 + 16;
 	}
 
 	this.calculateSize = function() {
@@ -688,8 +680,7 @@ function BarsH() {
 			this.height = HEIGHT;
 			this.my_COL_WIDTH = this.height - this.marginTop - this.marginBottom - 20; /* 20 is 2 * 10px margin from border of graphBg */
 			this.my_COL_WIDTH /= (this.maxColsTogether * ((100 - COL_OVERLAY) / 100) * DATA.length) + ((COL_OVERLAY / 100) * DATA.length) + (0.5 * (DATA.length)) - 0.5;
-		}
-		else { /* Calculate HEIGHT using my_COL_WIDTH */
+		} else { /* Calculate HEIGHT using my_COL_WIDTH */
 			this.my_COL_WIDTH = COL_WIDTH;
 			this.height = this.marginTop + this.marginBottom + 20;
 			this.height += DATA.length * (this.my_COL_WIDTH * this.maxColsTogether * ((100 - COL_OVERLAY) / 100) + (this.my_COL_WIDTH * COL_OVERLAY/100) + 0.5 * this.my_COL_WIDTH ) - (0.5 * this.my_COL_WIDTH);
@@ -721,7 +712,8 @@ function BarsH() {
 	};
 
 	this.addGrid = function() {
-		if ((OPTIONS & OPT_GRID_V) > 0) this.addGridV();
+		if ((OPTIONS & OPT_GRID_V) > 0)
+			this.addGridV();
 	}
 
 	this.addColumns = function() {
@@ -746,9 +738,8 @@ function BarsH() {
 				y += (100 - COL_OVERLAY) / 100 * this.my_COL_WIDTH;
 			}
 			document.getElementById('columns').appendChild(gr);
-			for (; j <= this.maxColsTogether; ++j) {
+			for (; j <= this.maxColsTogether; ++j)
 				y += (100 - COL_OVERLAY) / 100 * this.my_COL_WIDTH;
-			}
 			y += COL_OVERLAY / 100 * this.my_COL_WIDTH;
 			y += this.my_COL_WIDTH / 2;
 		}
@@ -772,24 +763,20 @@ function Pie() {
 
 	this.firstCalculations = function() {
 		/* Remove additinal series */
-		for (var i = 0; i < DATA.length; ++i) {
+		for (var i = 0; i < DATA.length; ++i)
 			DATA[i].splice(2, DATA[i].length - 2);
-		}
 
 		/* Sum values */
 		var sum = 0;
-		for (var i = 0; i < DATA.length; ++i) {
+		for (var i = 0; i < DATA.length; ++i)
 			sum += DATA[i][0];
-		}
 
 		/* Scale values according to 100% == 360 */
-		for (var i = 0; i < DATA.length; ++i) {
+		for (var i = 0; i < DATA.length; ++i)
 			DATA[i][2] = DATA[i][0] * (360)  / sum;
-		}
 
-		if (typeof START_ANGLE === "undefined") {
+		if (typeof START_ANGLE === "undefined")
 			START_ANGLE = 0;
-		}
 	}
 
 	/* Validates given DATA and options */
@@ -804,7 +791,8 @@ function Pie() {
 	}
 
 	this.calculateMargins = function() {
-		if (typeof TITLE !== "undefined") this.marginTop += 10 + 16; //16px is font-size
+		if (typeof TITLE !== "undefined")
+			this.marginTop += 10 + 16; //16px is font-size
 		this.paddingLeft += this.maxLabelTextLength + 10;
 		this.paddingRight += this.maxLabelTextLength + 10;
 	}
@@ -861,7 +849,8 @@ function Pie() {
 	this.addCircle = function() {
 		var angle = START_ANGLE;
 		var gap = this.r / 20;
-		if (gap < 2) gap = 0;
+		if (gap < 2)
+			gap = 0;
 		var cx = this.paddingLeft + this.r;
 		var cy = this.paddingTop + this.r;
 		for (var i = 0; i < DATA.length; ++i) {
@@ -883,9 +872,10 @@ function Pie() {
 			var tmpAngle = angle - gamma;
 			var x2 = Math.cos(getRad(tmpAngle)) * this.r;
 			var y2 = Math.sin(getRad(tmpAngle)) * this.r;
-			if (DATA[i][2] > 180) pathD += ' A ' + this.r + ',' + this.r + ' 1 1,1 ' + (cx + x2) + ',' + (cy + y2);
-			else pathD += ' A ' + this.r + ',' + this.r + ' 1 0,1 ' + (cx + x2) + ',' + (cy + y2);
-
+			if (DATA[i][2] > 180)
+				pathD += ' A ' + this.r + ',' + this.r + ' 1 1,1 ' + (cx + x2) + ',' + (cy + y2);
+			else
+				pathD += ' A ' + this.r + ',' + this.r + ' 1 0,1 ' + (cx + x2) + ',' + (cy + y2);
 			pathD += ' Z';
 
 			var linia = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -937,24 +927,20 @@ function Meter() {
 
 	this.firstCalculations = function() {
 		/* Remove additinal series */
-		for (var i = 0; i < DATA.length; ++i) {
+		for (var i = 0; i < DATA.length; ++i)
 			DATA[i].splice(2, DATA[i].length - 2);
-		}
 
 		/* Sum values */
 		var sum = 0;
-		for (var i = 0; i < DATA.length; ++i) {
+		for (var i = 0; i < DATA.length; ++i)
 			sum += DATA[i][0];
-		}
 
 		/* Scale values according to 100% == 360 */
-		for (var i = 0; i < DATA.length; ++i) {
+		for (var i = 0; i < DATA.length; ++i)
 			DATA[i][2] = DATA[i][0] * (360)  / sum;
-		}
 
-		if (typeof START_ANGLE === "undefined") {
+		if (typeof START_ANGLE === "undefined")
 			START_ANGLE = 0;
-		}
 	}
 
 	/* Validates given DATA and options */
@@ -969,7 +955,8 @@ function Meter() {
 	}
 
 	this.calculateMargins = function() {
-		if (typeof TITLE !== "undefined") this.marginTop += 10 + 16; //16px is font-size
+		if (typeof TITLE !== "undefined")
+			this.marginTop += 10 + 16; //16px is font-size
 	}
 
 	this.calculateSize = function() {
@@ -980,9 +967,12 @@ function Meter() {
 		var maxFinalGraphHeight = this.height - this.marginTop - this.marginBottom;
 		var maxFinalGraphSize = Math.min(maxFinalGraphWidth, maxFinalGraphHeight);
 
-		if (maxFinalGraphSize < 150) this.padding = 5;
-		else if (maxFinalGraphSize < 250) this.padding = 10;
-		else this.padding = 15;
+		if (maxFinalGraphSize < 150)
+			this.padding = 5;
+		else if (maxFinalGraphSize < 250)
+			this.padding = 10;
+		else
+			this.padding = 15;
 
 		this.r = (Math.min(maxFinalGraphWidth, maxFinalGraphHeight) / 2) - this.padding;
 
@@ -1021,8 +1011,7 @@ function Meter() {
 			pointerPathD += ' Z';
 			pointerPathD += 'M ' + (cx) + ',' + (cy - (smallR - this.padding - arrowLength));
 			pointerPathD += ' L ' + (cx) + ',' + (cy);
-		}
-		else {
+		} else {
 			pointerPathD += 'M ' + (cx) + ',' + (cy - smallR);
 			pointerPathD += ' L ' + (cx) + ',' + (cy);
 		}
@@ -1051,11 +1040,15 @@ function Meter() {
 
 		pathD = 'M ' + (cx + x1) + ',' + (cy + y1);
 		pathD += ' L ' + (cx + x2) + ',' + (cy + y2);
-		if (perone > 180) pathD += ' A ' + this.r + ',' + this.r + ' 1 1,1 ' + (cx + x3) + ',' + (cy + y3);
-		else pathD += ' A ' + this.r + ',' + this.r + ' 1 0,1 ' + (cx + x3) + ',' + (cy + y3);
+		if (perone > 180)
+			pathD += ' A ' + this.r + ',' + this.r + ' 1 1,1 ' + (cx + x3) + ',' + (cy + y3);
+		else
+			pathD += ' A ' + this.r + ',' + this.r + ' 1 0,1 ' + (cx + x3) + ',' + (cy + y3);
 		pathD += ' L ' + (cx + x4) + ',' + (cy + y4);
-		if (perone > 180) pathD += ' A ' + smallR + ',' + smallR + ' 1 1,0 ' + (cx + x1) + ',' + (cy + y1);
-		else pathD += ' A ' + smallR + ',' + smallR + ' 1 0,0 ' + (cx + x1) + ',' + (cy + y1);
+		if (perone > 180)
+			pathD += ' A ' + smallR + ',' + smallR + ' 1 1,0 ' + (cx + x1) + ',' + (cy + y1);
+		else
+			pathD += ' A ' + smallR + ',' + smallR + ' 1 0,0 ' + (cx + x1) + ',' + (cy + y1);
 
 		for (var i = 0; i < DATA.length; ++i) {
 			var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
