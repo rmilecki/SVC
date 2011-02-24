@@ -1,5 +1,5 @@
 /***************************************************************************
- e  Copyright (C) 2008-2009  Rafał Miłecki <zajec5@gmail.com>              *
+ *  Copyright (C) 2008-2009  Rafał Miłecki <zajec5@gmail.com>              *
  *                                                                         *
  *  This program is free software; you can redistribute it and/or modify   *
  *  it under the terms of the GNU Lesser General Public License as         *
@@ -1116,12 +1116,13 @@ function Meter() {
 parseParams();
 
 var obj;
-if (TYPE == 'BarsH') obj = new BarsH;
+if (typeof TYPE === "undefined") alert('No TYPE specified');
+else if (TYPE == 'BarsH') obj = new BarsH;
 else if (TYPE == 'BarsV') obj = new BarsV;
 else if (TYPE == 'Points') obj = new Points;
 else if (TYPE == 'Pie') obj = new Pie;
 else if (TYPE == 'Meter') obj = new Meter;
-else alert('Zły typ');
+else alert('Wrong chart TYPE');
 if (obj) obj.generate()
 
 toolTip.init();
