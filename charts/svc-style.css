@@ -1,0 +1,42 @@
+#graph { fill: url(svc-defs.svg#gradientGraph); }
+
+#columns.h g rect:first-child { fill: url(svc-defs.svg#gradientV1); }
+#columns.h g rect:first-child + rect { fill: url(svc-defs.svg#gradientV2); }
+#columns.h g rect:first-child + rect + rect { fill: url(svc-defs.svg#gradientV3); }
+
+#columns.v g rect:first-child { fill: url(svc-defs.svg#gradientH1); }
+#columns.v g rect:first-child + rect { fill: url(svc-defs.svg#gradientH2); }
+#columns.v g rect:first-child + rect + rect { fill: url(svc-defs.svg#gradientH3); }
+
+#columns.meter path { fill: url(svc-defs.svg#gradientM1); }
+#columns.meter path + path{ fill: url(svc-defs.svg#gradientM2); }
+#columns.meter path + path + path { fill: url(svc-defs.svg#gradientM3); }
+
+
+* { font-family: sans-serif; }
+rect.bg { stroke-width: 1px; stroke: black; fill: url(svc-defs.svg#gradientBg); }
+#title { font-size: 22px; text-shadow: #808080 2px 2px 3px; }
+#tooltip { fill: #d8dde0; fill-opacity: 0.90; visibility: hidden; }
+#toolTipText { visibility: hidden; }
+text { fill: black; }
+
+line { stroke-width: 1; stroke: #455762; }
+line:first-child, line:last-child { stroke: black; }
+
+#columns rect { stroke: #989898; stroke-width: 1px; }
+#columns rect:hover { stroke: white; }
+
+/* Points */
+#columns circle { stroke: #989898; stroke-width: 1; }
+#columns circle:hover { stroke: white; }
+#columns polyline { fill: none; stroke: black; }
+
+/* Pie */
+#columns path { fill-opacity: 1; fill: #bfe673; stroke: #989898; stroke-width: 1px; }
+#columns path:nth-child(2n) { fill: #73b9e6; }
+#columns path:hover { stroke: white; }
+
+/* Meter */
+#colshack path.pointer { stroke: black; stroke-opacity: 0.5; fill: white; fill-opacity: 0.5; stroke-width: 3px; }
+
+#values { font-size:11px; }

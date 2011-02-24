@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+    <line fill="url(../svc-defs.svg#operahack)" />
+    <script type="text/ecmascript" xlink:href="../svc-init.js" />
+    <script type="text/ecmascript"><![CDATA[
+        var TYPE = 'Meter';
+        var WIDTH = 300;
+        var HEIGHT = 250;
+        var DATA = [
+            [85, 'Opera 9.64'],
+            [20],
+            [93, 'Firefox 3.5']
+        ];
+        var START_ANGLE = 15;
+    ]]></script>
+    <script type="text/ecmascript" xlink:href="../svc-lib.js" />
+</svg>

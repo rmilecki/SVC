@@ -1,0 +1,45 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <defs>
+        <linearGradient id="gradientBg" x1="0" y1="100%" x2="0" y2="0">
+            <stop offset="0" stop-color="#7c96a6" />
+            <stop offset="50%" stop-color="#efefef" />
+        </linearGradient>
+        <linearGradient id="gradientGraph" x1="0" y1="100%" x2="0" y2="0">
+            <stop offset="70%" stop-color="#6f8c9d" />
+            <stop offset="100%" stop-color="#a2b9c6" />
+        </linearGradient>
+
+        <linearGradient id="gradientH1" x1="100%" y1="0" x2="0" y2="0">
+            <stop offset="0" stop-color="#59800d" />
+            <stop offset="100%" stop-color="#bfe673" />
+        </linearGradient>
+        <linearGradient id="gradientH2" x1="100%" y1="0" x2="0" y2="0">
+            <stop offset="0" stop-color="#0d5380" />
+            <stop offset="100%" stop-color="#73b9e6" />
+        </linearGradient>
+
+        <linearGradient id="gradientV1" x1="0" y1="100%" x2="0" y2="0">
+            <stop offset="0" stop-color="#59800d" />
+            <stop offset="100%" stop-color="#bfe673" />
+        </linearGradient>
+        <linearGradient id="gradientV2" x1="0" y1="100%" x2="0" y2="0">
+            <stop offset="0" stop-color="#0d5380" />
+            <stop offset="100%" stop-color="#73b9e6" />
+        </linearGradient>
+
+        <linearGradient id="gradientM1" x1="0" y1="0" x2="100%" y2="0">
+            <stop offset="0" stop-color="#ffb033" />
+            <stop offset="100%" stop-color="#900807" />
+        </linearGradient>
+        <linearGradient id="gradientM2" x1="0" y1="0" x2="100%" y2="0">
+            <stop offset="0" stop-color="#74fff0" />
+            <stop offset="100%" stop-color="#0e1a8a" />
+        </linearGradient>
+        <linearGradient id="gradientM3" x1="0" y1="0" x2="100%" y2="0">
+            <stop offset="0" stop-color="#8cd46f" />
+            <stop offset="100%" stop-color="#008f04" />
+        </linearGradient>
+    </defs>
+</svg>
