@@ -329,16 +329,20 @@ function Points() {
 	this.r = 5;
 
 	this.firstCalculations = function() {
-		/* Find max value and calculate amount of horizontal lines*/
+		/* Find max value and calculate amount of horizontal lines */
 		var maxValX = -1;
-		for (var i = 0; i < DATA.length; ++i)
-			maxValX = Math.max(maxValX, DATA[i][0]);
+		for (var i = 0; i < DATA.length; ++i) {
+			for (var j = 0; j < DATA[i].length; ++j)
+				maxValX = Math.max(maxValX, DATA[i][j][0]);
+		}
 		this.linesV = Math.ceil(maxValX / GRID_STEP) + 1;
 
-		/* Find max value and calculate amount of horizontal lines*/
+		/* Find max value and calculate amount of horizontal lines */
 		var maxValY = -1;
-		for (var i = 0; i < DATA.length; ++i)
-			maxValY = Math.max(maxValY, DATA[i][1]);
+		for (var i = 0; i < DATA.length; ++i) {
+			for (var j = 0; j < DATA[i].length; ++j)
+				maxValY = Math.max(maxValY, DATA[i][j][1]);
+		}
 		this.linesH = Math.ceil(maxValY / GRID_STEP) + 1;
 
 		/* Axises decisions */
@@ -406,75 +410,77 @@ function Points() {
 	}
 
 	this.addColumns = function() {
-		var prev = { x: -1, y: -1 }
-		var pathD = '';
-		var usedTime = 0;
-		var timePerLine = 1 / (DATA.length - 1);
-		var linia = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
 		for (var i = 0; i < DATA.length; ++i) {
-			var cx = DATA[i][0] / (this.linesV * GRID_STEP) * this.finalGraphWidth;
-			var cy = DATA[i][1] / (this.linesH * GRID_STEP) * this.finalGraphHeight;
-			cy = this.finalGraphHeight - cy;
-			var col = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-			col.setAttribute("cx", cx);
-			col.setAttribute("cy", cy);
-			col.setAttribute("r", this.r);
-			toolTip.applyTo(col, DATA[i][0] + ',' + DATA[i][1] + ((typeof DATA[i][2] === 'undefined') ? '' : (' (' + DATA[i][2] + ')')));
-			if ((OPTIONS & OPT_ANIM) > 0) {
-				var anim = document.createElementNS("http://www.w3.org/2000/svg", "set");
-				anim.setAttribute("attributeType", "XML");
-				anim.setAttribute("attributeName", "r");
-				anim.setAttribute("begin", "0s");
-				anim.setAttribute("to", "0");
-				anim.setAttribute("fill", "freeze");
-				col.appendChild(anim);
+			var linia = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+			var pathD = '';
 
-				var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
-				anim.setAttribute("attributeType", "XML");
-				anim.setAttribute("attributeName", "r");
-				anim.setAttribute("begin", (usedTime) + "s");
-				anim.setAttribute("dur", timePerLine + "s");
-				anim.setAttribute("from", 0);
-				anim.setAttribute("to", 2 * this.r);
-				col.appendChild(anim);
+			var timePerLine = 1 / (DATA[i].length - 1);
+			var usedTime = 0;
+			var prev = { x: -1, y: -1 }
+			for (var j = 0; j < DATA[i].length; ++j) {
+				var cx = DATA[i][j][0] / (this.linesV * GRID_STEP) * this.finalGraphWidth;
+				var cy = DATA[i][j][1] / (this.linesH * GRID_STEP) * this.finalGraphHeight;
+				cy = this.finalGraphHeight - cy;
+				var col = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+				col.setAttribute("cx", cx);
+				col.setAttribute("cy", cy);
+				col.setAttribute("r", this.r);
+				toolTip.applyTo(col, DATA[i][j][0] + ',' + DATA[i][j][1] + ((typeof DATA[i][j][2] === 'undefined') ? '' : (' (' + DATA[i][j][2] + ')')));
+				if ((OPTIONS & OPT_ANIM) > 0) {
+					var anim = document.createElementNS("http://www.w3.org/2000/svg", "set");
+					anim.setAttribute("attributeType", "XML");
+					anim.setAttribute("attributeName", "r");
+					anim.setAttribute("begin", "0s");
+					anim.setAttribute("to", "0");
+					anim.setAttribute("fill", "freeze");
+					col.appendChild(anim);
 
-				var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
-				anim.setAttribute("attributeType", "XML");
-				anim.setAttribute("attributeName", "r");
-				anim.setAttribute("begin", (usedTime + timePerLine) + "s");
-				anim.setAttribute("dur", timePerLine + "s");
-				anim.setAttribute("from", 2 * this.r);
-				anim.setAttribute("to", this.r);
-				anim.setAttribute("fill", "freeze");
-				col.appendChild(anim);
-			}
-			document.getElementById('columns').appendChild(col);
-
-			if ((OPTIONS & OPT_LINE) > 0) {
-				if ((OPTIONS & OPT_ANIM) > 0 && i > 0) {
 					var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
 					anim.setAttribute("attributeType", "XML");
-					anim.setAttribute("attributeName", "points");
-					anim.setAttribute("begin", (usedTime - timePerLine) + "s");
+					anim.setAttribute("attributeName", "r");
+					anim.setAttribute("begin", (usedTime) + "s");
 					anim.setAttribute("dur", timePerLine + "s");
-					anim.setAttribute("from", pathD + ' ' + prev.x + ',' + prev.y);
-					anim.setAttribute("to", pathD + ' ' + cx + ',' + cy);
-					anim.setAttribute("additive", "sum");
-					linia.appendChild(anim);
+					anim.setAttribute("from", 0);
+					anim.setAttribute("to", 1.5 * this.r);
+					col.appendChild(anim);
+
+					var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+					anim.setAttribute("attributeType", "XML");
+					anim.setAttribute("attributeName", "r");
+					anim.setAttribute("begin", (usedTime + timePerLine) + "s");
+					anim.setAttribute("dur", timePerLine + "s");
+					anim.setAttribute("from", 1.5 * this.r);
+					anim.setAttribute("to", this.r);
+					anim.setAttribute("fill", "freeze");
+					col.appendChild(anim);
 				}
-				pathD += ' ' + cx + ' ' + cy;
+				document.getElementById('columns').appendChild(col);
+
+				if ((OPTIONS & OPT_LINE) > 0) {
+					if ((OPTIONS & OPT_ANIM) > 0 && j > 0) {
+						var anim = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+						anim.setAttribute("attributeType", "XML");
+						anim.setAttribute("attributeName", "points");
+						anim.setAttribute("begin", (usedTime - timePerLine) + "s");
+						anim.setAttribute("dur", timePerLine + "s");
+						anim.setAttribute("from", pathD + ' ' + prev.x + ',' + prev.y);
+						anim.setAttribute("to", pathD + ' ' + cx + ',' + cy);
+						anim.setAttribute("additive", "sum");
+						linia.appendChild(anim);
+					}
+					pathD += ' ' + cx + ' ' + cy;
+				}
+
+				usedTime += timePerLine;
+
+				//gr.appendChild(this.createText(DATA[i][j]));
+				//document.getElementById('columns').appendChild(gr);
+				prev.x = cx;
+				prev.y = cy;
 			}
-
-			usedTime += timePerLine;
-
-			//gr.appendChild(this.createText(DATA[i][j]));
-			//document.getElementById('columns').appendChild(gr);
-			prev.x = cx;
-			prev.y = cy;
+			linia.setAttribute("points", pathD);
+			document.getElementById('columns').insertBefore(linia, document.getElementById('columns').firstChild);
 		}
-		linia.setAttribute("points", pathD);
-
-		document.getElementById('columns').insertBefore(linia, document.getElementById('columns').firstChild);
 	}
 
 	document.getElementById('columns').setAttribute('class', "v");
